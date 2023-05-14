@@ -1,7 +1,26 @@
-import Landing from './pages/Landing.jsx';
+// React Router
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+
+// Component Imports
+import { Landing, NotFound } from './pages';
 
 function App() {
-  return <Landing />;
+  return (
+    <Routes>
+      <Route path='/' element={<div>Dashboard</div>} />
+      <Route path='/register' element={<div>Register Page</div>} />
+      <Route path='/landing' element={<Landing />} />
+      <Route path='*' element={<NotFound />} />
+    </Routes>
+  );
 }
 
-export default App;
+function WrappedApp() {
+  return (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
+}
+
+export default WrappedApp;

@@ -71,11 +71,11 @@ html {
   --borderRadius: 0.25rem;
   --letterSpacing: 1px;
   --transition: 0.3s ease-in-out all;
-  --max-width: 1120px;
+  --max-width: 1300px;
   --fixed-width: 500px;
-  --fluid-width: 90vw;
+  --fluid-width: 80vw;
   --breakpoint-lg: 992px;
-  --nav-height: 6rem;
+  --nav-height: 8rem;
 
   /* Typography */
   --global-lh: 1.75;

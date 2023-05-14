@@ -33,12 +33,12 @@ const Wrapper = styled.main`
   }
   @media (min-width: 992px) {
     .page {
-      grid-template-columns: 1fr 1fr;
-      column-gap: 3rem;
+      grid-template-columns: minmax(400px, 1fr) minmax(250px, 1fr);
+      column-gap: 2rem;
     }
     .main-img {
       display: block;
-      width: 400px;
+      max-width: 100%;
     }
   }
 `;
