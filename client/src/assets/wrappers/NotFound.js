@@ -9,8 +9,13 @@ const Wrapper = styled.main`
   text-align: center;
 
   h3 {
-    padding: 50px 0;
+    padding: 50px 0 0;
   }
+
+  p {
+    color: var(--grey-700);
+  }
+
   button {
     padding: 10px;
   }

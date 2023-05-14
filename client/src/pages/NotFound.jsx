@@ -12,7 +12,8 @@ function NotFound() {
     <Wrapper>
       <div className='container'>
         <img src={notFound} alt='not-found' className='main-img' />
-        <h3>Uh oh! This page cannot be found 🙈</h3>
+        <h3>Merlins Beard! The classic 404 🙈</h3>
+        <p>Unfortunately this page does not exist</p>
         <Link to='/landing'>
           <button type='button' className='btn'>
             Why don&apos;t we go home?

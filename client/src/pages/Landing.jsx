@@ -1,4 +1,4 @@
-// React Imports
+// React Router
 import { Link } from 'react-router-dom';
 
 // Style component imports
@@ -28,10 +28,11 @@ function Landing() {
             save for the important things, live for now and plan for the future.
             Lets go!
           </p>
-          <Link to='/register'>
-            <button className='btn btn-hero' type='button'>
-              Login/Register
-            </button>
+          <Link to='/login' className='btn btn-hero'>
+            Login
+          </Link>
+          <Link to='/register' className='btn btn-funky'>
+            Register
           </Link>
         </div>
         <img src={landingImg} alt='flipacoin-landing' className='main-img' />

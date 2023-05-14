@@ -2,14 +2,15 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 // Component Imports
-import { Landing, NotFound } from './pages';
+import { Landing, Register, Login, Dashboard, NotFound } from './pages';
 
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<div>Dashboard</div>} />
-      <Route path='/register' element={<div>Register Page</div>} />
       <Route path='/landing' element={<Landing />} />
+      <Route path='/register' element={<Register />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/' element={<Dashboard />} />
       <Route path='*' element={<NotFound />} />
     </Routes>
   );

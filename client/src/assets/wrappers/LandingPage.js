@@ -10,10 +10,9 @@ const Wrapper = styled.main`
     align-items: center;
   }
   .page {
-    min-height: calc(100vh - var(--nav-height));
+    min-height: calc(100vh - var(--nav-height) - 65px);
     display: grid;
     align-items: center;
-    justify-content: center;
     margin-top: -3rem;
     margin: 0 auto;
   }
@@ -30,6 +29,11 @@ const Wrapper = styled.main`
   }
   .main-img {
     display: none;
+  }
+  .btn {
+    margin-right: 15px;
+    font-size: var(--fs-500);
+    padding: 0.5rem 1.25rem;
   }
   @media (min-width: 992px) {
     .page {
