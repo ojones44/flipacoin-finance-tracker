@@ -1,24 +1,27 @@
 // React Imports
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useAppContext } from '../context/appContext';
 
 // Style component imports
 import Wrapper from '../assets/wrappers/RegisterPage';
 
 // Component Imports
-import { Logo } from '../components';
+import { Logo, FloatingLabelForm, Alert } from '../components';
 import registerSchema from '../assets/data/registerSchema';
 import demoUser from '../assets/data/demoUserSchema';
 
 function Register() {
   const [formData, setFormData] = useState(registerSchema);
-
-  const { fName, lName, email, password, confirmPassword } = formData;
+  const { fName, email, password, confirmPassword } = formData;
   const navigate = useNavigate();
 
+  const { isLoading, showAlert, displayAlert, displaySuccess, clearAlert } =
+    useAppContext();
+
   useEffect(() => {
-    console.log('Checking password data');
-  }, [password, confirmPassword]);
+    clearAlert();
+  }, [fName, email, password, confirmPassword]);
 
   function onChange(e) {
     setFormData((prevValues) => ({
@@ -33,72 +36,57 @@ function Register() {
 
   function onSubmit(e) {
     e.preventDefault();
-    console.log(formData);
-    navigate('/');
+
+    if (!fName || !email || !password || !confirmPassword) {
+      displayAlert();
+    }
+    if (fName && email && password && confirmPassword) {
+      displaySuccess();
+      console.log(formData);
+      // navigate('/');
+    }
   }
 
   return (
-    <Wrapper>
+    <Wrapper className='full-page-centre'>
       <div className='register'>
         <Logo />
-        <h4>Register</h4>
-        <form onSubmit={onSubmit} className='form'>
-          <label htmlFor='fName'>
-            First Name
-            <br />
-            <input
-              type='text'
-              id='fName'
-              name='fName'
-              value={fName}
-              onChange={onChange}
-            />
-          </label>
-          <label htmlFor='lName'>
-            Last Name
-            <br />
-            <input
-              type='text'
-              id='lName'
-              name='lName'
-              value={lName}
-              onChange={onChange}
-            />
-          </label>
-          <label htmlFor='email'>
-            Email
-            <br />
-            <input
-              type='email'
-              id='email'
-              name='email'
-              value={email}
-              onChange={onChange}
-            />
-          </label>
-          <label htmlFor='password'>
-            Password
-            <br />
-            <input
-              type='password'
-              id='password'
-              name='password'
-              value={password}
-              onChange={onChange}
-            />
-          </label>
-          <label htmlFor='confirm-password'>
-            Confirm Password
-            <br />
-            <input
-              type='password'
-              id='confirmPassword'
-              name='confirmPassword'
-              value={confirmPassword}
-              onChange={onChange}
-            />
-          </label>
-          <p>Sign up and discover your financial potential!</p>
+        <h5 className='flow'>Register</h5>
+
+        <form onSubmit={onSubmit} className='form flow'>
+          <FloatingLabelForm
+            type='text'
+            name='fName'
+            value={fName}
+            onChange={onChange}
+            labelText='First Name'
+          />
+
+          <FloatingLabelForm
+            type='email'
+            name='email'
+            value={email}
+            onChange={onChange}
+            labelText='Email'
+          />
+
+          <FloatingLabelForm
+            type='password'
+            name='password'
+            value={password}
+            onChange={onChange}
+            labelText='Password'
+          />
+
+          <FloatingLabelForm
+            type='password'
+            name='confirmPassword'
+            value={confirmPassword}
+            onChange={onChange}
+            labelText='Confirm Password'
+          />
+
+          {showAlert && <Alert />}
           <div className='buttons'>
             <button type='submit' className='btn btn-hero'>
               Register
@@ -108,7 +96,7 @@ function Register() {
             </button>
           </div>
         </form>
-        <p>
+        <p className='signup'>
           Already registered?{' '}
           <Link to='/login' className='link'>
             Login
