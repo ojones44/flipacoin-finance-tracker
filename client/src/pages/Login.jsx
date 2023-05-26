@@ -32,7 +32,7 @@ function Register() {
     e.preventDefault();
 
     if (!email || !password) {
-      displayAlert();
+      displayAlert('Please fill in credentials 👆🏻');
     }
     if (email && password) {
       console.log(formData);

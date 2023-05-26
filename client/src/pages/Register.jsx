@@ -13,11 +13,18 @@ import demoUser from '../assets/data/demoUserSchema';
 
 function Register() {
   const [formData, setFormData] = useState(registerSchema);
+  const [match, setMatch] = useState(false);
   const { fName, email, password, confirmPassword } = formData;
   const navigate = useNavigate();
 
-  const { isLoading, showAlert, displayAlert, displaySuccess, clearAlert } =
-    useAppContext();
+  const {
+    isLoading,
+    showAlert,
+    displayAlert,
+    displaySuccess,
+    clearAlert,
+    passwordMatch,
+  } = useAppContext();
 
   useEffect(() => {
     clearAlert();
@@ -30,6 +37,14 @@ function Register() {
     }));
   }
 
+  function checkPasswords() {
+    setMatch(password === confirmPassword);
+
+    if (confirmPassword !== '') {
+      passwordMatch(match);
+    }
+  }
+
   function createDemo() {
     setFormData(demoUser);
   }
@@ -38,10 +53,14 @@ function Register() {
     e.preventDefault();
 
     if (!fName || !email || !password || !confirmPassword) {
-      displayAlert();
+      displayAlert('Form incomplete 😆');
     }
     if (fName && email && password && confirmPassword) {
-      displaySuccess();
+      if (!match) {
+        displayAlert('Passwords still do not match! 😱');
+        return;
+      }
+      displaySuccess('Form successfully submitted 👍🏻');
       console.log(formData);
       // navigate('/');
     }
@@ -76,6 +95,7 @@ function Register() {
             value={password}
             onChange={onChange}
             labelText='Password'
+            onBlur={checkPasswords}
           />
 
           <FloatingLabelForm
@@ -84,6 +104,7 @@ function Register() {
             value={confirmPassword}
             onChange={onChange}
             labelText='Confirm Password'
+            onBlur={checkPasswords}
           />
 
           {showAlert && <Alert />}

@@ -201,6 +201,10 @@ ul {
   text-decoration: underline;
 }
 
+.line-flow {
+  line-height: 1.5rem;
+}
+
 /* Buttons */
 
 .btn {

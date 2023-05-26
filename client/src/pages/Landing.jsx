@@ -21,7 +21,7 @@ function Landing() {
           <h1>
             Financial <span>Tracking</span>
           </h1>
-          <p>
+          <p className='line-flow'>
             Are you tired of not knowing where all your money goes? Do you need
             to gain clarity on your finances? Flipacoin is the perfect app for
             managing your monthly and day to day spending. Track your outgoings,

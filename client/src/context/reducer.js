@@ -8,28 +8,44 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-  if (action.type === ACTIONS.DISPLAY_ALERT) {
-    return {
-      ...state,
-      showAlert: true,
-      alertType: 'danger',
-      alertText: "You've missed one! 🙈",
-    };
+  switch (action.type) {
+    case ACTIONS.DISPLAY_ALERT:
+      return {
+        ...state,
+        showAlert: true,
+        alertType: 'danger',
+        alertText: action.message,
+      };
+
+    case ACTIONS.DISPLAY_SUCCESS:
+      return {
+        ...state,
+        showAlert: true,
+        alertType: 'success',
+        alertText: action.message,
+      };
+
+    case ACTIONS.CLEAR_ALERT:
+      return {
+        ...state,
+        showAlert: false,
+        alertType: '',
+        alertText: '',
+      };
+
+    case ACTIONS.PW_MATCH:
+      return {
+        ...state,
+        showAlert: true,
+        alertType: action.result ? 'success' : 'danger',
+        alertText: action.result
+          ? 'Passwords Match 👍🏻'
+          : 'Passwords do not match 😱',
+      };
+
+    default:
+      throw new Error(`Action does not exist: ${action.type}`);
   }
-  if (action.type === ACTIONS.DISPLAY_SUCCESS) {
-    return {
-      ...state,
-      showAlert: true,
-      alertType: 'success',
-      alertText: 'It all checks out. Boom 😎',
-    };
-  }
-  if (action.type === ACTIONS.CLEAR_ALERT) {
-    return {
-      initialState,
-    };
-  }
-  throw new Error(`No such action: ${action.type}`);
 };
 
 export default reducer;

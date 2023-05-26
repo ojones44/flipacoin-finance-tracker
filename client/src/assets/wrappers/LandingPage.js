@@ -20,7 +20,7 @@ const Wrapper = styled.main`
     font-weight: 700;
     span {
       color: var(--primary-500);
-      border-bottom: 3px solid black;
+      text-decoration: underline;
     }
   }
   p {
