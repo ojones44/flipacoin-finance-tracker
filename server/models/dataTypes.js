@@ -18,7 +18,7 @@ const requiredNameString = {
 
 const requiredEmailString = {
 	type: String,
-	required: [true, 'This field is required'],
+	required: [true, 'Please input your email address'],
 	validate: {
 		validator: validator.isEmail,
 		message: 'Please provide a valid email address',
@@ -30,6 +30,7 @@ const requiredPasswordString = {
 	type: String,
 	required: [true, 'Please input a password'],
 	minlength: 8,
+	select: false,
 };
 
 export {

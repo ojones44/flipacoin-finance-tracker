@@ -8,6 +8,23 @@ import jwt from 'jsonwebtoken';
 // Database
 import User from '../models/userModel.js';
 
+// Error handlers
+import { BadRequestError } from '../errors/customErrors.js';
+
+// Helper functions
+
+const generateToken = (id) => {
+	return jwt.sign({ id }, process.env.JWT_SECRET, {
+		expiresIn: process.env.JWT_EXPIRES_IN,
+	});
+};
+
+const hashPassword = async (password) => {
+	const salt = await bycrypt.genSalt(10);
+	const hashedPassword = await bycrypt.hash(password, salt);
+	return hashedPassword;
+};
+
 // Managing login and registration
 
 // @description   Get users list
@@ -29,23 +46,35 @@ const login = asyncHandler(async (req, res) => {
 // @access        Public
 const register = asyncHandler(async (req, res, next) => {
 	try {
-		if (req.body.password.length < 8) {
-			throw new Error('Invalid password, must be at least 8 characters');
+		const { name, email, password } = req.body;
+
+		if (!name || !email || !password) {
+			throw new BadRequestError('Please provide data in all fields');
 		}
 
-		const salt = await bycrypt.genSalt(10);
-		const hashedPassword = await bycrypt.hash(req.body.password, salt);
+		if (password && password.length < 8) {
+			throw new BadRequestError(
+				'Invalid password, must be at least 8 characters'
+			);
+		}
+
+		const userAlreadyRegistered = await User.findOne({ email });
+
+		if (userAlreadyRegistered) {
+			throw new BadRequestError('Already registered. Please login.');
+		}
 
 		const newUser = await User.create({
-			name: _.capitalize(req.body.name),
-			email: _.toLower(req.body.email),
-			password: hashedPassword,
+			name: _.capitalize(name),
+			email: _.toLower(email),
+			password: password && (await hashPassword(password)),
 		});
 
 		res.status(HTTP_STATUS.OK).json({
 			_id: newUser.id,
 			name: newUser.name,
 			email: newUser.email,
+			token: generateToken(newUser.id),
 		});
 	} catch (error) {
 		next(error);
