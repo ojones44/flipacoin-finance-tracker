@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useReducer, useContext } from 'react';
 import reducer, { initialState } from './reducer';
 
@@ -25,6 +26,34 @@ function AppProvider({ children }) {
     dispatch({ type: ACTIONS.PW_MATCH, result });
   };
 
+  const addUserToLocalStorage = (name, email, token) => {
+    localStorage.setItem('user', JSON.stringify({ name, email }));
+    localStorage.setItem('token', token);
+  };
+
+  const removeUserFromLocalStorage = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+  };
+
+  const registerUser = async (currentUser) => {
+    dispatch({ type: ACTIONS.REGISTER_BEGIN });
+    try {
+      const response = await axios.post('/api/auth/register', currentUser);
+      const { name, email, token } = response.data;
+      dispatch({
+        type: ACTIONS.REGISTER_SUCCESS,
+        payload: { name, email, token },
+      });
+      addUserToLocalStorage(name, email, token);
+    } catch (error) {
+      dispatch({
+        type: ACTIONS.REGISTER_ERROR,
+        payload: { message: error.response.data.message },
+      });
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -33,6 +62,8 @@ function AppProvider({ children }) {
         clearAlert,
         displaySuccess,
         passwordMatch,
+        registerUser,
+        removeUserFromLocalStorage,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 const registerSchema = {
-  fName: '',
+  name: '',
   email: '',
   password: '',
   confirmPassword: '',

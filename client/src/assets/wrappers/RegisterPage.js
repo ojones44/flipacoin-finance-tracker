@@ -15,6 +15,7 @@ const Wrapper = styled.main`
     box-shadow: var(--shadow-4), var(--shadow-4), var(--shadow-4);
     border-radius: 0.25rem;
     width: 400px;
+    max-width: 90%;
   }
 
   .form {
@@ -35,7 +36,7 @@ const Wrapper = styled.main`
     display: inline-block;
     width: 200px;
     position: absolute;
-    transform: translateX(-295px);
+    left: 5px;
     pointer-events: none;
     transition: all 0.35s ease;
     -moz-transition: all 0.35s ease;
@@ -43,7 +44,7 @@ const Wrapper = styled.main`
   }
 
   .has-input {
-    transform: translateY(-20px) translateX(-299px);
+    transform: translateY(-20px) translateX(-4px);
     font-size: 14px;
     color: var(--black);
   }
@@ -68,7 +69,7 @@ const Wrapper = styled.main`
 
   input:active + label,
   input:focus + label {
-    transform: translateY(-20px) translateX(-299px);
+    transform: translateY(-20px) translateX(-4px);
     font-size: 14px;
     color: var(--black);
   }

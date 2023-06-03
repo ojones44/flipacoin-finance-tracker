@@ -14,21 +14,44 @@ import demoUser from '../assets/data/demoUserSchema';
 function Register() {
   const [formData, setFormData] = useState(registerSchema);
   const [match, setMatch] = useState(false);
-  const { fName, email, password, confirmPassword } = formData;
+  const [isComplete, setIsComplete] = useState(false);
+
+  const { name, email, password, confirmPassword } = formData;
   const navigate = useNavigate();
 
   const {
+    user,
+    token,
     isLoading,
     showAlert,
     displayAlert,
-    displaySuccess,
     clearAlert,
     passwordMatch,
+    registerUser,
   } = useAppContext();
 
   useEffect(() => {
+    if (user && token) {
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
+    }
+  }, [user, token, navigate]);
+
+  useEffect(() => {
     clearAlert();
-  }, [fName, email, password, confirmPassword]);
+    if (
+      name &&
+      email &&
+      password &&
+      confirmPassword &&
+      password === confirmPassword
+    ) {
+      setIsComplete(true);
+    } else {
+      setIsComplete(false);
+    }
+  }, [name, email, password, confirmPassword]);
 
   function onChange(e) {
     setFormData((prevValues) => ({
@@ -38,11 +61,9 @@ function Register() {
   }
 
   function checkPasswords() {
-    setMatch(password === confirmPassword);
-
-    if (confirmPassword !== '') {
-      passwordMatch(match);
-    }
+    const isMatched = password === confirmPassword;
+    setMatch(isMatched);
+    passwordMatch(isMatched);
   }
 
   function createDemo() {
@@ -52,17 +73,17 @@ function Register() {
   function onSubmit(e) {
     e.preventDefault();
 
-    if (!fName || !email || !password || !confirmPassword) {
+    if (!name || !email || !password || !confirmPassword) {
       displayAlert('Form incomplete 😆');
+      return;
     }
-    if (fName && email && password && confirmPassword) {
+    if (name && email && password && confirmPassword) {
       if (!match) {
         displayAlert('Passwords still do not match! 😱');
         return;
       }
-      displaySuccess('Form successfully submitted 👍🏻');
-      console.log(formData);
-      // navigate('/');
+      const userForm = { name, email, password };
+      registerUser(userForm);
     }
   }
 
@@ -75,8 +96,8 @@ function Register() {
         <form onSubmit={onSubmit} className='form flow'>
           <FloatingLabelForm
             type='text'
-            name='fName'
-            value={fName}
+            name='name'
+            value={name}
             onChange={onChange}
             labelText='First Name'
           />
@@ -109,10 +130,19 @@ function Register() {
 
           {showAlert && <Alert />}
           <div className='buttons'>
-            <button type='submit' className='btn btn-hero'>
+            <button
+              type='submit'
+              className='btn btn-hero'
+              disabled={!isComplete || isLoading}
+            >
               Register
             </button>
-            <button type='submit' onClick={createDemo} className='btn btn-hero'>
+            <button
+              type='submit'
+              onClick={createDemo}
+              className='btn btn-hero'
+              disabled={isLoading}
+            >
               Demo
             </button>
           </div>

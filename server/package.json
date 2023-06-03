@@ -5,13 +5,15 @@
 	"main": "server.js",
 	"type": "module",
 	"scripts": {
-		"start": "node server.js",
-		"server": "nodemon server.js",
+		"server": "nodemon server.js --ignore client",
+		"client": "cd ../client && npm run dev",
+		"start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\" ",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "Oliver Jones",
 	"license": "ISC",
 	"devDependencies": {
+		"concurrently": "^8.0.1",
 		"nodemon": "^2.0.22"
 	},
 	"dependencies": {

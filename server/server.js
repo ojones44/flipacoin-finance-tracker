@@ -19,15 +19,15 @@ dotenv.config();
 connectDB();
 
 const app = express();
-const port = process.env.PORT || 5000;
 
 // Parse incoming requests as JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
-	// throw new Error('Test error');
-	res.send('Lets go!');
+const port = process.env.PORT || 5000;
+
+app.get('/api/test', (req, res) => {
+	res.json({ message: 'Proxy enabled' });
 });
 
 // Any time these routes are hit, route file is called

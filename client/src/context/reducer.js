@@ -5,6 +5,8 @@ const initialState = {
   showAlert: false,
   alertText: '',
   alertType: '',
+  user: JSON.parse(localStorage.getItem('user')) || null,
+  token: localStorage.getItem('token') || null,
 };
 
 const reducer = (state, action) => {
@@ -41,6 +43,32 @@ const reducer = (state, action) => {
         alertText: action.result
           ? 'Passwords Match 👍🏻'
           : 'Passwords do not match 😱',
+      };
+
+    case ACTIONS.REGISTER_BEGIN:
+      return {
+        ...state,
+        isLoading: true,
+      };
+
+    case ACTIONS.REGISTER_SUCCESS:
+      return {
+        ...state,
+        user: { name: action.payload.name, email: action.payload.email },
+        token: action.payload.token,
+        isLoading: false,
+        showAlert: true,
+        alertType: 'success',
+        alertText: 'Form successful, to the dashboard...',
+      };
+
+    case ACTIONS.REGISTER_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertType: 'danger',
+        alertText: action.payload.message,
       };
 
     default:

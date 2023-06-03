@@ -9,13 +9,12 @@ const setDefaultError = (err) => {
 	(defaultError.statusCode =
 		err.statusCode || HTTP_STATUS.INTERNAL_SERVER_ERROR),
 		(defaultError.message =
-			`Invalid Data: ${err.message}` ||
-			'Something went wrong, please try again later.');
+			`${err.message}` || 'Something went wrong, please try again later.');
 };
 
 const setValidationError = (err) => {
 	defaultError.statusCode = HTTP_STATUS.BAD;
-	defaultError.message = `Invalid Data: ${Object.values(err.errors)
+	defaultError.message = `${Object.values(err.errors)
 		.map((item) => item.message)
 		.join(', ')}`;
 };
