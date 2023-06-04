@@ -26,8 +26,8 @@ function AppProvider({ children }) {
     dispatch({ type: ACTIONS.PW_MATCH, result });
   };
 
-  const addUserToLocalStorage = (name, email, token) => {
-    localStorage.setItem('user', JSON.stringify({ name, email }));
+  const addUserToLocalStorage = (_id, name, email, token) => {
+    localStorage.setItem('user', JSON.stringify({ _id, name, email }));
     localStorage.setItem('token', token);
   };
 
@@ -36,19 +36,24 @@ function AppProvider({ children }) {
     localStorage.removeItem('token');
   };
 
-  const registerUser = async (currentUser) => {
-    dispatch({ type: ACTIONS.REGISTER_BEGIN });
+  const resetState = () => {
+    dispatch({ type: ACTIONS.RESET });
+  };
+
+  const authenticateUser = async ({ currentUser, endpoint, authType }) => {
+    dispatch({ type: ACTIONS.AUTH_BEGIN });
     try {
-      const response = await axios.post('/api/auth/register', currentUser);
-      const { name, email, token } = response.data;
+      const response = await axios.post(`/api/auth/${endpoint}`, currentUser);
+      const { _id, name, email, token } = response.data;
       dispatch({
-        type: ACTIONS.REGISTER_SUCCESS,
-        payload: { name, email, token },
+        type: ACTIONS.AUTH_SUCCESS,
+        payload: { _id, name, email, token },
+        authType,
       });
-      addUserToLocalStorage(name, email, token);
+      addUserToLocalStorage(_id, name, email, token);
     } catch (error) {
       dispatch({
-        type: ACTIONS.REGISTER_ERROR,
+        type: ACTIONS.AUTH_ERROR,
         payload: { message: error.response.data.message },
       });
     }
@@ -62,8 +67,9 @@ function AppProvider({ children }) {
         clearAlert,
         displaySuccess,
         passwordMatch,
-        registerUser,
+        authenticateUser,
         removeUserFromLocalStorage,
+        resetState,
       }}
     >
       {children}

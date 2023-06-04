@@ -27,7 +27,7 @@ function Register() {
     displayAlert,
     clearAlert,
     passwordMatch,
-    registerUser,
+    authenticateUser,
   } = useAppContext();
 
   useEffect(() => {
@@ -82,8 +82,12 @@ function Register() {
         displayAlert('Passwords still do not match! 😱');
         return;
       }
-      const userForm = { name, email, password };
-      registerUser(userForm);
+      const currentUser = { name, email, password };
+      authenticateUser({
+        currentUser,
+        endpoint: 'register',
+        authType: 'register',
+      });
     }
   }
 

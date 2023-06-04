@@ -9,7 +9,10 @@ import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 
 // Error handlers
-import { BadRequestError } from '../errors/customErrors.js';
+import {
+	BadRequestError,
+	UnauthenticatedError,
+} from '../errors/customErrors.js';
 
 // Helper functions
 
@@ -25,6 +28,11 @@ const hashPassword = async (password) => {
 	return hashedPassword;
 };
 
+const comparePassword = async (enteredPassword, dbPassword) => {
+	const isMatched = await bycrypt.compare(enteredPassword, dbPassword);
+	return isMatched;
+};
+
 // Managing login and registration
 
 // @description   Get users list
@@ -37,8 +45,35 @@ const getUsers = asyncHandler(async (req, res) => {
 // @description   Login user
 // @route         POST /api/auth/login
 // @access        Public
-const login = asyncHandler(async (req, res) => {
-	res.send('Login route');
+const login = asyncHandler(async (req, res, next) => {
+	try {
+		const { email, password } = req.body;
+
+		if (!email || !password) {
+			throw new BadRequestError('Please provide email and password.');
+		}
+
+		const user = await User.findOne({ email }).select('+password');
+
+		if (!user) {
+			throw new BadRequestError('Invalid login credentials.');
+		}
+
+		const passwordMatched = await comparePassword(password, user.password);
+
+		if (user && passwordMatched) {
+			res.status(HTTP_STATUS.OK).json({
+				_id: user.id,
+				name: user.name,
+				email: user.email,
+				token: generateToken(user.id),
+			});
+		} else {
+			throw new UnauthenticatedError('Invalid login credentials.');
+		}
+	} catch (error) {
+		next(error);
+	}
 });
 
 // @description   Register user

@@ -23,4 +23,12 @@ class NotFoundError extends CustomError {
 	}
 }
 
-export { CustomError, BadRequestError, NotFoundError };
+// Unauthenticated error
+class UnauthenticatedError extends CustomError {
+	constructor(message) {
+		super(message);
+		this.statusCode = HTTP_STATUS.UNAUTHORIZED;
+	}
+}
+
+export { CustomError, BadRequestError, NotFoundError, UnauthenticatedError };

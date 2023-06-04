@@ -2,7 +2,7 @@ import HTTP_STATUS from '../data/httpStatus.js';
 
 const defaultError = {
 	statusCode: HTTP_STATUS.BAD,
-	message: 'There has been an unexptected error. Please try again.',
+	message: 'Unexpected error. Please try again.',
 };
 
 const setDefaultError = (err) => {
@@ -21,7 +21,7 @@ const setValidationError = (err) => {
 
 const setDuplicateError = (err) => {
 	defaultError.statusCode = HTTP_STATUS.BAD;
-	defaultError.message = `${err.keyValue.email} already exists. Please use another email address or login.`;
+	defaultError.message = `${err.keyValue.email} already exists. Please login.`;
 };
 
 export { defaultError, setDefaultError, setValidationError, setDuplicateError };

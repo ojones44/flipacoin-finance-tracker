@@ -1,6 +1,7 @@
 // Package imports
 import express from 'express';
 import dotenv from 'dotenv';
+import morgan from 'morgan';
 
 // Database
 import connectDB from './connect/db.js';
@@ -19,6 +20,10 @@ dotenv.config();
 connectDB();
 
 const app = express();
+
+if (process.env.NODE_ENV !== 'production') {
+	app.use(morgan('dev'));
+}
 
 // Parse incoming requests as JSON
 app.use(express.json());

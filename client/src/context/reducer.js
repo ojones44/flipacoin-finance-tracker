@@ -45,24 +45,31 @@ const reducer = (state, action) => {
           : 'Passwords do not match 😱',
       };
 
-    case ACTIONS.REGISTER_BEGIN:
+    case ACTIONS.AUTH_BEGIN:
       return {
         ...state,
         isLoading: true,
       };
 
-    case ACTIONS.REGISTER_SUCCESS:
+    case ACTIONS.AUTH_SUCCESS:
       return {
         ...state,
-        user: { name: action.payload.name, email: action.payload.email },
+        user: {
+          _id: action.payload._id,
+          name: action.payload.name,
+          email: action.payload.email,
+        },
         token: action.payload.token,
         isLoading: false,
         showAlert: true,
         alertType: 'success',
-        alertText: 'Form successful, to the dashboard...',
+        alertText:
+          action.authType === 'login'
+            ? 'Login succesful, to the dashboard...'
+            : 'Form successful, to the dashboard...',
       };
 
-    case ACTIONS.REGISTER_ERROR:
+    case ACTIONS.AUTH_ERROR:
       return {
         ...state,
         isLoading: false,
@@ -70,6 +77,9 @@ const reducer = (state, action) => {
         alertType: 'danger',
         alertText: action.payload.message,
       };
+
+    case ACTIONS.RESET:
+      return initialState;
 
     default:
       throw new Error(`Action does not exist: ${action.type}`);

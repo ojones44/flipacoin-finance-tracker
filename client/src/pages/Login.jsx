@@ -10,15 +10,38 @@ import Wrapper from '../assets/wrappers/RegisterPage';
 import { Logo, FloatingLabelForm, Alert } from '../components';
 import loginSchema from '../assets/data/loginSchema';
 
-function Register() {
+function Login() {
   const [formData, setFormData] = useState(loginSchema);
+  const [isComplete, setIsComplete] = useState(false);
+
   const { email, password } = formData;
   const navigate = useNavigate();
 
-  const { isLoading, showAlert, displayAlert, clearAlert } = useAppContext();
+  const {
+    user,
+    token,
+    isLoading,
+    showAlert,
+    displayAlert,
+    clearAlert,
+    authenticateUser,
+  } = useAppContext();
+
+  useEffect(() => {
+    if (user && token) {
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
+    }
+  }, [user, token, navigate]);
 
   useEffect(() => {
     clearAlert();
+    if (email && password) {
+      setIsComplete(true);
+    } else {
+      setIsComplete(false);
+    }
   }, [email, password]);
 
   function onChange(e) {
@@ -33,9 +56,11 @@ function Register() {
 
     if (!email || !password) {
       displayAlert('Please fill in credentials 👆🏻');
+      return;
     }
     if (email && password) {
-      console.log(formData);
+      const currentUser = { email, password };
+      authenticateUser({ currentUser, endpoint: 'login', authType: 'login' });
       // navigate('/');
     }
   }
@@ -65,7 +90,11 @@ function Register() {
 
           {showAlert && <Alert />}
           <div className='buttons'>
-            <button type='submit' className='btn btn-hero'>
+            <button
+              type='submit'
+              className='btn btn-hero'
+              disabled={!isComplete || isLoading}
+            >
               Login
             </button>
           </div>
@@ -80,4 +109,4 @@ function Register() {
     </Wrapper>
   );
 }
-export default Register;
+export default Login;
