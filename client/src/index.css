@@ -1,7 +1,7 @@
 /* fonts */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,300&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Cabin&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 
 *,
 ::after,
@@ -38,7 +38,11 @@ html {
   --primary-800: #470054;
   --primary-900: #044e54;
 
+  /* Accent Colours */
+  --accent-100: #dfc1e4;
+
   /* Greyscale Colours */
+  --transparent-white: rgba(255, 255, 255, 0.75);
   --grey-50: #f0f4f8;
   --grey-100: #d9e2ec;
   --grey-200: #bcccdc;
@@ -60,7 +64,7 @@ html {
 
   /* Font  */
   --headingFont: 'Roboto', Sans-Serif;
-  --bodyFont: 'Cabin', Sans-Serif;
+  --bodyFont: 'Noto Sans', Sans-Serif;
   --small-text: 0.875rem;
   --extra-small-text: 0.7em;
 
@@ -115,7 +119,7 @@ h5 {
   font-family: var(--headingFont);
   font-weight: var(--fw-400);
   line-height: var(--heading-lh);
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   letter-spacing: var(--letterSpacing);
 }
 

@@ -1,4 +1,11 @@
+// Style component imports
+import Wrapper from '../../assets/wrappers/Goals';
+
 function Goals() {
-  return <h1>Goals Page</h1>;
+  return (
+    <Wrapper>
+      <h1>Goals Page</h1>
+    </Wrapper>
+  );
 }
 export default Goals;
