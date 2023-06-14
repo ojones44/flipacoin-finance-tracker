@@ -1,5 +1,5 @@
 /* fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bakbak+One&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 
@@ -28,21 +28,19 @@ html {
 
   /* Primary Colours */
   --primary-50: #e0fcff;
-  --primary-100: #bef8fd;
-  --primary-200: #87eaf2;
-  --primary-300: #54d1db;
-  --primary-400: #38bec9;
-  --primary-500: #4b0558;
-  --primary-600: #00818a;
-  --primary-700: #00818a;
-  --primary-800: #470054;
-  --primary-900: #044e54;
+  --primary-100: #84b5f1;
+  --primary-200: #4695f7;
+  --primary-300: #4669f7;
+  --primary-500: #150ade;
+  --primary-800: #20084e;
 
   /* Accent Colours */
   --accent-100: #dfc1e4;
+  --accent-300: #a541f6;
+  --accent-400: #7b46f7;
 
   /* Greyscale Colours */
-  --transparent-white: rgba(255, 255, 255, 0.75);
+  --transparent-white: rgba(255, 255, 255, 0.9);
   --grey-50: #f0f4f8;
   --grey-100: #d9e2ec;
   --grey-200: #bcccdc;
@@ -63,13 +61,13 @@ html {
   --green-dark: #1d9a60;
 
   /* Font  */
-  --headingFont: 'Roboto', Sans-Serif;
+  --headingFont: 'Bakbak One', Sans-Serif;
   --bodyFont: 'Noto Sans', Sans-Serif;
   --small-text: 0.875rem;
   --extra-small-text: 0.7em;
 
   /* Styling Variables */
-  --backgroundColor: var(--grey-50);
+  --backgroundColor: var(--white);
   --headingColor: var(--primary-800);
   --textColor: var(--grey-900);
   --borderRadius: 0.15rem;
@@ -168,6 +166,11 @@ ul {
   padding: 0;
 }
 
+*::selection {
+  color: var(--primary-500);
+  background-color: var(--accent-100);
+}
+
 .img {
   width: 100%;
   display: block;
@@ -215,30 +218,31 @@ ul {
   cursor: pointer;
   color: var(--white);
   background: var(--primary-500);
-  border: transparent;
+  border: 2px solid var(--primary-500);
   border-radius: var(--borderRadius);
   letter-spacing: var(--letterSpacing);
   padding: 0.375rem 0.75rem;
-  box-shadow: var(--shadow-2);
+  box-shadow: var(--shadow-1);
   transition: var(--transition);
   text-transform: capitalize;
   display: inline-block;
 }
 
 .btn:hover {
-  background: var(--primary-200);
-  box-shadow: var(--shadow-4);
-  color: var(--primary-500);
+  background: var(--primary-300);
+  box-shadow: var(--shadow-2);
+  /* color: var(--primary-500); */
 }
 
 .btn-funky {
   color: var(--primary-500);
-  background: var(--primary-200);
+  border: 2px solid var(--primary-300);
+  background: transparent;
 }
 
 .btn-funky:hover {
   color: var(--white);
-  background: var(--primary-500);
+  background: var(--primary-300);
 }
 
 .btn-block {

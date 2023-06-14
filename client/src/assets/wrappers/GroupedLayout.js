@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.main`
-  background: linear-gradient(142deg, var(--accent-100) 0%, var(--white) 100%);
+  background: linear-gradient(142deg, var(--primary-100) 0%, var(--white) 100%);
 
   display: grid;
   gap: 1.5rem;
@@ -95,8 +95,7 @@ const Wrapper = styled.main`
 
   svg {
     width: 1.5rem;
-    fill: var(--primary-500);
-    transform: scale(0.95);
+    fill: var(--primary-800);
   }
 
   .logout svg {
@@ -117,10 +116,11 @@ const Wrapper = styled.main`
 
   .pages div:hover {
     left: 4px;
-    background-color: var(--accent-100);
+    background-color: var(--primary-500);
+    color: var(--white);
 
     svg {
-      transform: scale(1);
+      fill: var(--white);
     }
   }
 

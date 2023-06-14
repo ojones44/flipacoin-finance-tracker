@@ -20,7 +20,8 @@ const Wrapper = styled.main`
     padding: 10px;
   }
   .main-img {
-    max-width: 600px;
+    width: 100%;
+    max-width: 500px;
   }
 `;
 

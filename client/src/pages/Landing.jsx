@@ -23,10 +23,9 @@ function Landing() {
           </h1>
           <p className='line-flow'>
             Are you tired of not knowing where all your money goes? Do you need
-            to gain clarity on your finances? Flipacoin is the perfect app for
-            managing your monthly and day to day spending. Track your outgoings,
-            save for the important things, live for now and plan for the future.
-            Lets go!
+            to gain clarity on your monthly and day-to-day finances? Flipacoin
+            is the perfect app for managing your spending. Track your outgoings,
+            save for the important things, and set meaningful goals. Ready?
           </p>
           <Link to='/login' className='btn btn-hero'>
             Login

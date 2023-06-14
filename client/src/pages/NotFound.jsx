@@ -6,7 +6,7 @@ import { useAppContext } from '../context/appContext';
 import Wrapper from '../assets/wrappers/NotFound';
 
 //  Asset Imports
-import notFound from '../assets/images/not-found-alt.svg';
+import notFound from '../assets/images/not-found.svg';
 
 function NotFound() {
   const { user, token } = useAppContext();

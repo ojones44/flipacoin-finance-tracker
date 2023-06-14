@@ -91,6 +91,10 @@ const Wrapper = styled.main`
   .btn {
     flex: 1;
   }
+
+  .link {
+    color: var(--primary-500);
+  }
 `;
 
 export default Wrapper;
