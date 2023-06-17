@@ -40,6 +40,14 @@ function AppProvider({ children }) {
     dispatch({ type: ACTIONS.RESET });
   };
 
+  const setActivePage = (page) => {
+    dispatch({ type: ACTIONS.SET_PAGE, page });
+  };
+
+  const setActiveNav = () => {
+    dispatch({ type: ACTIONS.SET_ACTIVE_NAV });
+  };
+
   const authenticateUser = async ({ currentUser, endpoint, authType }) => {
     dispatch({ type: ACTIONS.AUTH_BEGIN });
     try {
@@ -70,6 +78,8 @@ function AppProvider({ children }) {
         authenticateUser,
         removeUserFromLocalStorage,
         resetState,
+        setActivePage,
+        setActiveNav,
       }}
     >
       {children}

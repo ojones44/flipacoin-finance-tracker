@@ -17,7 +17,7 @@ const Wrapper = styled.main`
     margin: 0 auto;
   }
   h1 {
-    font-weight: 700;
+    font-weight: var(--fw-900);
     span {
       color: var(--primary-500);
       text-decoration: underline;
@@ -31,9 +31,9 @@ const Wrapper = styled.main`
     display: none;
   }
   .btn {
-    margin-right: 15px;
+    margin-right: var(--padding-100);
     font-size: var(--fs-500);
-    padding: 0.5rem 1.25rem;
+    padding: var(--padding-50) var(--padding-150);
   }
   @media (min-width: 992px) {
     .page {

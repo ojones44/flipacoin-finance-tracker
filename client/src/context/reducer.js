@@ -7,6 +7,8 @@ const initialState = {
   alertType: '',
   user: JSON.parse(localStorage.getItem('user')) || null,
   token: localStorage.getItem('token') || null,
+  activePage: 'dashboard',
+  activeNav: false,
 };
 
 const reducer = (state, action) => {
@@ -76,6 +78,18 @@ const reducer = (state, action) => {
         showAlert: true,
         alertType: 'danger',
         alertText: action.payload.message,
+      };
+
+    case ACTIONS.SET_PAGE:
+      return {
+        ...state,
+        activePage: action.page,
+      };
+
+    case ACTIONS.SET_ACTIVE_NAV:
+      return {
+        ...state,
+        activeNav: !state.activeNav,
       };
 
     case ACTIONS.RESET:

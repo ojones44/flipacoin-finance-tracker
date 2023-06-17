@@ -17,14 +17,20 @@ html {
   /* Font Weights */
   --fw-300: 300;
   --fw-400: 400;
+  --fw-700: 700;
+  --fw-900: 900;
 
   /* Font Sizes */
+  --fs-300: 0.85rem;
   --fs-400: 1rem;
   --fs-500: 1.25rem;
   --fs-600: 1.55rem;
   --fs-700: 1.95rem;
   --fs-800: 2.44rem;
   --fs-900: 3.05rem;
+
+  /* SVG's */
+  --default-svg-size: 2rem;
 
   /* Primary Colours */
   --primary-50: #e0fcff;
@@ -40,7 +46,7 @@ html {
   --accent-400: #7b46f7;
 
   /* Greyscale Colours */
-  --transparent-white: rgba(255, 255, 255, 0.9);
+  --transparent-white: rgba(255, 255, 255, 0.75);
   --grey-50: #f0f4f8;
   --grey-100: #d9e2ec;
   --grey-200: #bcccdc;
@@ -70,14 +76,24 @@ html {
   --backgroundColor: var(--white);
   --headingColor: var(--primary-800);
   --textColor: var(--grey-900);
+  --dashboardBorder: 4px solid var(--grey-100);
   --borderRadius: 0.15rem;
+  --borderRadiusMd: 0.5rem;
+  --borderRadiusLg: 1rem;
   --letterSpacing: 1px;
-  --transition: 0.3s ease-in-out all;
+  --transition: 0.2s ease-in-out all;
   --max-width: 1300px;
   --fixed-width: 500px;
   --fluid-width: 80vw;
   --breakpoint-lg: 992px;
   --nav-height: 8rem;
+
+  /* Padding Values */
+  --padding-25: 0.25rem;
+  --padding-50: 0.5rem;
+  --padding-75: 0.75rem;
+  --padding-100: 1rem;
+  --padding-150: 1.5rem;
 
   /* Typography */
   --global-lh: 1.75;
@@ -103,7 +119,7 @@ body {
 }
 
 p {
-  margin-bottom: 1.5rem;
+  /* margin-bottom: 1.5rem; */
   /* max-width: 40em; */
 }
 
@@ -164,6 +180,11 @@ button:disabled {
 ul {
   list-style-type: none;
   padding: 0;
+}
+
+img {
+  width: 100%;
+  padding-bottom: 5px;
 }
 
 *::selection {

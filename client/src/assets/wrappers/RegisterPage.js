@@ -11,9 +11,8 @@ const Wrapper = styled.main`
     align-items: center;
     justify-content: center;
     padding: 15px 40px 15px 40px;
-    background-color: rgba(255, 255, 255, 0.1);
     box-shadow: var(--shadow-4), var(--shadow-4), var(--shadow-4);
-    border-radius: 0.25rem;
+    border-radius: var(--borderRadius);
     width: 400px;
     max-width: 90%;
   }
@@ -23,12 +22,12 @@ const Wrapper = styled.main`
     width: 95%;
     flex-direction: column;
     text-align: left;
-    gap: 10px;
+    gap: var(--padding-75);
   }
 
   .form-group {
     position: relative;
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--padding-150);
   }
 
   label {
@@ -85,7 +84,7 @@ const Wrapper = styled.main`
 
   .buttons {
     display: flex;
-    gap: 10px;
+    gap: var(--padding-75);
   }
 
   .btn {
