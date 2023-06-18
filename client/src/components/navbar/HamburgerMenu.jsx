@@ -2,13 +2,23 @@
 import { useState } from 'react';
 import { VscMenu } from 'react-icons/vsc';
 
+// Component Imports
+import MenuModal from './MenuModal';
+
 function HamburgerMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className='hamburger' onClick={() => setIsOpen(!isOpen)}>
-      <VscMenu />
-    </div>
+    <>
+      <button
+        type='button'
+        className='menu-btn'
+        onClick={() => setIsOpen(true)}
+      >
+        <VscMenu />
+      </button>
+      <MenuModal isOpen={isOpen} setIsOpen={setIsOpen} />
+    </>
   );
 }
 

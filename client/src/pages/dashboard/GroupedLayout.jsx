@@ -15,7 +15,7 @@ function GroupedLayout() {
     <Wrapper>
       <aside className='dashboard-container navbar'>
         <UserProfile />
-        <SidebarNavigation navClass='desktop-nav' />
+        <SidebarNavigation navClass='desktop' />
         <Logout />
         <HamburgerMenu />
       </aside>

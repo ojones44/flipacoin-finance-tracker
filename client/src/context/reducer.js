@@ -92,6 +92,13 @@ const reducer = (state, action) => {
         activeNav: !state.activeNav,
       };
 
+    case ACTIONS.LOGOUT:
+      return {
+        ...initialState,
+        user: null,
+        token: null,
+      };
+
     case ACTIONS.RESET:
       return initialState;
 

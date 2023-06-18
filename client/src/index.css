@@ -285,6 +285,31 @@ img {
   color: var(--white);
 }
 
+.menu-btn {
+  border: transparent;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  display: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--borderRadius);
+  transition: all 0.2s ease;
+}
+
+.menu-btn svg {
+  font-size: var(--default-svg-size);
+}
+
+.menu-btn:active {
+  scale: 0.9;
+}
+
+.menu-btn:hover {
+  background-color: var(--grey-50);
+}
+
 /* Alert boxes */
 
 .alert {

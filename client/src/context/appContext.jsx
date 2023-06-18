@@ -36,6 +36,11 @@ function AppProvider({ children }) {
     localStorage.removeItem('token');
   };
 
+  const logoutUser = () => {
+    removeUserFromLocalStorage();
+    dispatch({ type: ACTIONS.LOGOUT });
+  };
+
   const resetState = () => {
     dispatch({ type: ACTIONS.RESET });
   };
@@ -76,10 +81,10 @@ function AppProvider({ children }) {
         displaySuccess,
         passwordMatch,
         authenticateUser,
-        removeUserFromLocalStorage,
         resetState,
         setActivePage,
         setActiveNav,
+        logoutUser,
       }}
     >
       {children}

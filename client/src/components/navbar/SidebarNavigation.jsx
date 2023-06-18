@@ -3,16 +3,15 @@ import { NavLink } from 'react-router-dom';
 
 import links from '../../utils/links';
 
-function SidebarNavigation({ navClass }) {
+function SidebarNavigation({ navClass, setIsOpen }) {
   return (
-    <section className={navClass}>
+    <section className={`nav ${navClass}`}>
       {links.map((link) => (
         <NavLink
           to={link.path}
           key={link.id}
-          // onClick={setActiveNav}
-          // className={activeNav ? `${navClass} active` : `${navClass}`}
           className='route'
+          onClick={setIsOpen ? () => setIsOpen(false) : ''}
         >
           <div>
             {link.icon}

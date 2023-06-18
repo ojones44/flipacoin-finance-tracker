@@ -5,18 +5,13 @@ import { FiLogOut } from 'react-icons/fi';
 import { useAppContext } from '../../context/appContext';
 
 function Logout() {
-  const { removeUserFromLocalStorage, resetState } = useAppContext();
-
-  function logout() {
-    removeUserFromLocalStorage();
-    resetState();
-  }
+  const { logoutUser } = useAppContext();
 
   return (
     <section className='logout'>
       <div>
         <FiLogOut />
-        <button type='button' onClick={logout}>
+        <button type='button' onClick={logoutUser}>
           Logout
         </button>
       </div>
