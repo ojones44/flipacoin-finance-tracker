@@ -8,15 +8,14 @@ import {
 	deleteUser,
 } from '../controllers/authController.js';
 
-// TODO: setup JWT route protection
-// const { protect } = require("../middleware/authMiddleware.cjs");
+import protectRoute from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/', getUsers);
+router.get('/', protectRoute, getUsers);
 router.post('/login', login);
 router.post('/register', register);
-router.put('/:id', updateUser);
-router.delete('/:id', deleteUser);
+router.put('/:id', protectRoute, updateUser);
+router.delete('/:id', protectRoute, deleteUser);
 
 export default router;

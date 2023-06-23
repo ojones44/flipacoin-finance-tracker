@@ -87,6 +87,7 @@ html {
   --fluid-width: 80vw;
   --breakpoint-lg: 992px;
   --nav-height: 8rem;
+  --blur: 3px;
 
   /* Padding Values */
   --padding-25: 0.25rem;
@@ -233,6 +234,14 @@ img {
   line-height: 1.5rem;
 }
 
+.blur {
+  filter: blur(var(--blur));
+  -webkit-filter: blur(var(--blur));
+  -moz-filter: blur(var(--blur));
+  -o-filter: blur(var(--blur));
+  -ms-filter: blur(var(--blur));
+}
+
 /* Buttons */
 
 .btn {
@@ -308,6 +317,17 @@ img {
 
 .menu-btn:hover {
   background-color: var(--grey-50);
+}
+
+.logout-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--red-dark);
+}
+
+.logout-btn:hover {
+  text-decoration: underline;
 }
 
 /* Alert boxes */

@@ -8,7 +8,7 @@ const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
   token: localStorage.getItem('token') || null,
   activePage: 'dashboard',
-  activeNav: false,
+  modalMenuOpen: false,
 };
 
 const reducer = (state, action) => {
@@ -86,10 +86,10 @@ const reducer = (state, action) => {
         activePage: action.page,
       };
 
-    case ACTIONS.SET_ACTIVE_NAV:
+    case ACTIONS.MODAL_MENU_TOGGLE:
       return {
         ...state,
-        activeNav: !state.activeNav,
+        modalMenuOpen: action.payload,
       };
 
     case ACTIONS.LOGOUT:

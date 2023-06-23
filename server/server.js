@@ -14,6 +14,7 @@ import monthRoutes from './routes/monthRoutes.js';
 // Middleware
 import notFoundMiddleware from './middleware/notFoundMiddleware.js';
 import errorMiddleware from './middleware/errorMiddleware.js';
+import protectRoute from './middleware/authMiddleware.js';
 
 dotenv.config();
 
@@ -37,7 +38,7 @@ app.get('/api/test', (req, res) => {
 
 // Any time these routes are hit, route file is called
 app.use(endpoint.auth, authRoutes);
-app.use(endpoint.month, monthRoutes);
+app.use(endpoint.month, protectRoute, monthRoutes);
 
 // Looking for route not matched errors
 app.use(notFoundMiddleware);

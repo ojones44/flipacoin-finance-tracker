@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 
 // React Imports
 import { useAppContext } from '../../context/appContext';
-import CurrentPage from './CurrentPage';
 
 function UserProfile() {
-  const { user } = useAppContext();
+  const { user, activePage } = useAppContext();
 
   return (
     <Link to='/settings' className='route'>
@@ -21,7 +20,7 @@ function UserProfile() {
           <div>
             <h5>{user ? user.name : 'undefined'}</h5>
             <p>Free Account</p>
-            <CurrentPage />
+            <p>Page: {activePage}</p>
           </div>
         </div>
       </section>

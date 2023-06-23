@@ -1,5 +1,7 @@
+import HTTP_STATUS from '../data/httpStatus.js';
+
 const notFoundMiddleware = (req, res) => {
-	const statusCode = 404;
+	const statusCode = HTTP_STATUS.NOT_FOUND;
 
 	res.status(statusCode);
 	res.json({

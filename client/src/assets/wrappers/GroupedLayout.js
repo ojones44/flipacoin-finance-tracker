@@ -16,6 +16,7 @@ const Wrapper = styled.main`
     border-radius: var(--borderRadiusLg);
     padding: var(--padding-100);
     box-shadow: var(--shadow-3);
+    transition: var(--transition);
   }
 
   .profile {
@@ -64,6 +65,11 @@ const Wrapper = styled.main`
     margin: 0;
     padding: 0;
     color: var(--grey-400);
+  }
+
+  .user div p:nth-child(3) {
+    color: var(--black);
+    display: none;
   }
 
   .user div:hover {
@@ -132,25 +138,6 @@ const Wrapper = styled.main`
     gap: var(--padding-25);
   }
 
-  .current-page {
-    margin: 0;
-    padding: 0;
-    color: var(--grey-200);
-    font-weight: var(--fw-400);
-    display: none;
-  }
-
-  .logout button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--red-dark);
-  }
-
-  .logout button:hover {
-    text-decoration: underline;
-  }
-
   .menu-modal {
     padding: var(--padding-100);
     position: absolute;
@@ -184,9 +171,15 @@ const Wrapper = styled.main`
     gap: 3rem;
   }
 
-  .modal-body button:hover {
+  .modal-body .menu-btn:hover {
     transform: rotate(90deg);
     background-color: none;
+  }
+
+  @media (min-width: 900px) {
+    .menu-modal {
+      display: none;
+    }
   }
 
   @media (max-width: 900px) {
@@ -205,7 +198,7 @@ const Wrapper = styled.main`
       display: none;
     }
 
-    .logout {
+    .logout-nav {
       display: none;
     }
 
@@ -213,7 +206,7 @@ const Wrapper = styled.main`
       display: grid;
     }
 
-    .current-page {
+    .user div p:nth-child(3) {
       display: block;
     }
   }

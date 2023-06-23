@@ -1,24 +1,18 @@
 // React imports
-import { useState } from 'react';
 import { VscMenu } from 'react-icons/vsc';
-
-// Component Imports
-import MenuModal from './MenuModal';
+import { useAppContext } from '../../context/appContext';
 
 function HamburgerMenu() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { setModalOpen } = useAppContext();
 
   return (
-    <>
-      <button
-        type='button'
-        className='menu-btn'
-        onClick={() => setIsOpen(true)}
-      >
-        <VscMenu />
-      </button>
-      <MenuModal isOpen={isOpen} setIsOpen={setIsOpen} />
-    </>
+    <button
+      type='button'
+      className='menu-btn'
+      onClick={() => setModalOpen(true)}
+    >
+      <VscMenu />
+    </button>
   );
 }
 

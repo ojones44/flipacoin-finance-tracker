@@ -7,9 +7,6 @@ import {
 	deleteMonth,
 } from '../controllers/monthController.js';
 
-// TODO: setup JWT route protection
-// const { protect } = require("../middleware/authMiddleware.cjs");
-
 const router = express.Router();
 
 router.get('/', getMonths);

@@ -4,14 +4,16 @@ import { FiLogOut } from 'react-icons/fi';
 // React Imports
 import { useAppContext } from '../../context/appContext';
 
-function Logout() {
+function Logout({ logoutType }) {
   const { logoutUser } = useAppContext();
 
   return (
-    <section className='logout'>
+    <section
+      className={logoutType === 'mobile' ? `logout` : 'logout logout-nav'}
+    >
       <div>
         <FiLogOut />
-        <button type='button' onClick={logoutUser}>
+        <button type='button' className='logout-btn' onClick={logoutUser}>
           Logout
         </button>
       </div>

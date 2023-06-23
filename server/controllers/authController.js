@@ -39,7 +39,8 @@ const comparePassword = async (enteredPassword, dbPassword) => {
 // @route         GET /api/auth
 // @access        Private
 const getUsers = asyncHandler(async (req, res) => {
-	res.send('Get all users');
+	const user = await User.findById(req.user._id).select('-password');
+	res.send(`User: ${user}`);
 });
 
 // @description   Login user

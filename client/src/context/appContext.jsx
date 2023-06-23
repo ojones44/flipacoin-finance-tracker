@@ -49,8 +49,8 @@ function AppProvider({ children }) {
     dispatch({ type: ACTIONS.SET_PAGE, page });
   };
 
-  const setActiveNav = () => {
-    dispatch({ type: ACTIONS.SET_ACTIVE_NAV });
+  const setModalOpen = (result) => {
+    dispatch({ type: ACTIONS.MODAL_MENU_TOGGLE, payload: result });
   };
 
   const authenticateUser = async ({ currentUser, endpoint, authType }) => {
@@ -83,7 +83,7 @@ function AppProvider({ children }) {
         authenticateUser,
         resetState,
         setActivePage,
-        setActiveNav,
+        setModalOpen,
         logoutUser,
       }}
     >
