@@ -8,7 +8,7 @@ function HamburgerMenu() {
   return (
     <button
       type='button'
-      className='menu-btn'
+      className='icon-btn hamburger'
       onClick={() => setModalOpen(true)}
     >
       <VscMenu />

@@ -18,7 +18,7 @@ function MenuModal() {
       <div className='modal-body'>
         <button
           type='button'
-          className='menu-btn'
+          className='icon-btn'
           onClick={() => setModalOpen(false)}
         >
           <GrClose />

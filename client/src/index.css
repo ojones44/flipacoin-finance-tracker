@@ -285,6 +285,7 @@ img {
 }
 
 .btn-danger {
+  border: 2px solid var(--red-dark);
   background: var(--red-light);
   color: var(--red-dark);
 }
@@ -294,28 +295,27 @@ img {
   color: var(--white);
 }
 
-.menu-btn {
+.icon-btn {
   border: transparent;
   background: transparent;
   display: grid;
   place-items: center;
   cursor: pointer;
-  display: none;
   width: 3rem;
   height: 3rem;
   border-radius: var(--borderRadius);
   transition: all 0.2s ease;
 }
 
-.menu-btn svg {
+.icon-btn svg {
   font-size: var(--default-svg-size);
 }
 
-.menu-btn:active {
+.icon-btn:active {
   scale: 0.9;
 }
 
-.menu-btn:hover {
+.icon-btn:hover {
   background-color: var(--grey-50);
 }
 

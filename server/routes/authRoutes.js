@@ -5,6 +5,7 @@ import {
 	login,
 	register,
 	updateUser,
+	updatePassword,
 	deleteUser,
 } from '../controllers/authController.js';
 
@@ -16,6 +17,7 @@ router.get('/', protectRoute, getUsers);
 router.post('/login', login);
 router.post('/register', register);
 router.put('/:id', protectRoute, updateUser);
+router.put('/password/:id', protectRoute, updatePassword);
 router.delete('/:id', protectRoute, deleteUser);
 
 export default router;

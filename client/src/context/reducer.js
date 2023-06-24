@@ -99,6 +99,17 @@ const reducer = (state, action) => {
         token: null,
       };
 
+    case ACTIONS.UPDATE_USER:
+      return {
+        ...state,
+        user: {
+          _id: action.payload._id,
+          name: action.payload.name,
+          email: action.payload.email,
+        },
+        token: action.payload.token,
+      };
+
     case ACTIONS.RESET:
       return initialState;
 

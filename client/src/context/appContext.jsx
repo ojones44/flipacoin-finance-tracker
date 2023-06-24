@@ -72,6 +72,50 @@ function AppProvider({ children }) {
     }
   };
 
+  const updateUser = async (newUserInfo) => {
+    try {
+      const config = {
+        headers: { Authorization: `Bearer ${state.token}` },
+      };
+      const response = await axios.put(
+        `api/auth/${state.user._id}`,
+        newUserInfo,
+        config
+      );
+      const { _id, name, email, token } = response.data;
+      dispatch({
+        type: ACTIONS.UPDATE_USER,
+        payload: { _id, name, email, token },
+      });
+      displaySuccess('Details updated successfully.');
+      addUserToLocalStorage(_id, name, email, token);
+    } catch (error) {
+      dispatch({
+        type: ACTIONS.AUTH_ERROR,
+        payload: { message: error.response.data.message },
+      });
+    }
+  };
+
+  const updatePassword = async (newPasswordInfo) => {
+    try {
+      const config = {
+        headers: { Authorization: `Bearer ${state.token}` },
+      };
+      await axios.put(
+        `api/auth/password/${state.user._id}`,
+        newPasswordInfo,
+        config
+      );
+      displaySuccess('Password changed successfully.');
+    } catch (error) {
+      dispatch({
+        type: ACTIONS.AUTH_ERROR,
+        payload: { message: error.response.data.message },
+      });
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -85,6 +129,8 @@ function AppProvider({ children }) {
         setActivePage,
         setModalOpen,
         logoutUser,
+        updateUser,
+        updatePassword,
       }}
     >
       {children}

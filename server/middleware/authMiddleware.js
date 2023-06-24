@@ -2,9 +2,6 @@ import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 import HTTP_STATUS from '../data/httpStatus.js';
 
-// Database
-import User from '../models/userModel.js';
-
 // Error handlers
 import { UnauthenticatedError } from '../errors/customErrors.js';
 

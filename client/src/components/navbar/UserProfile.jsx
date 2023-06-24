@@ -20,7 +20,7 @@ function UserProfile() {
           <div>
             <h5>{user ? user.name : 'undefined'}</h5>
             <p>Free Account</p>
-            <p>Page: {activePage}</p>
+            <p>{activePage}</p>
           </div>
         </div>
       </section>

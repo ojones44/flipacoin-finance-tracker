@@ -117,18 +117,109 @@ const register = asyncHandler(async (req, res, next) => {
 	}
 });
 
-// @description   Update user
+// @description   Update user details
 // @route         PUT /api/auth/:id
 // @access        Private
-const updateUser = asyncHandler(async (req, res) => {
-	res.send('Update user');
+const updateUser = asyncHandler(async (req, res, next) => {
+	try {
+		if (!req.body.name || !req.body.email) {
+			res.status(HTTP_STATUS.BAD);
+			throw new BadRequestError('Please provide all values');
+		}
+
+		const { name, email } = req.body;
+		const user = await User.findById(req.user._id).select('-password');
+
+		if (!user) {
+			res.status(HTTP_STATUS.BAD);
+			throw new BadRequestError('User not found');
+		}
+
+		user.name = req.body.name ? name || req.body.name : user.name;
+		user.email = req.body.email ? email || req.body.email : user.email;
+		await user.save();
+
+		res.status(HTTP_STATUS.OK).json({
+			_id: user.id,
+			name: user.name,
+			email: user.email,
+			token: generateToken(user.id),
+		});
+	} catch (error) {
+		next(error);
+	}
+});
+
+// @description   Update user password
+// @route         PUT /api/auth/password/:id
+// @access        Private
+const updatePassword = asyncHandler(async (req, res, next) => {
+	try {
+		const { oldPassword, newPassword, confirmPassword } = req.body;
+
+		if (!oldPassword || !newPassword || !confirmPassword) {
+			res.status(HTTP_STATUS.BAD);
+			throw new BadRequestError('Please provide all fields');
+		}
+
+		const user = await User.findById(req.user._id).select('+password');
+
+		if (!user) {
+			res.status(HTTP_STATUS.BAD);
+			throw new BadRequestError('User not found');
+		}
+
+		const oldPasswordMatched = await comparePassword(
+			oldPassword,
+			user.password
+		);
+
+		if (!oldPasswordMatched) {
+			res.status(HTTP_STATUS.BAD);
+			throw new BadRequestError('Old password is incorrect');
+		}
+
+		const newPasswordValid = newPassword === confirmPassword;
+		const isSameAsOldPassword = newPassword === oldPassword;
+
+		if (!newPasswordValid) {
+			res.status(HTTP_STATUS.BAD);
+			throw new BadRequestError('New password fields do not match');
+		}
+
+		if (isSameAsOldPassword) {
+			res.status(HTTP_STATUS.BAD);
+			throw new BadRequestError(
+				'New password cannot be the same as old password'
+			);
+		}
+
+		if (oldPasswordMatched && newPasswordValid) {
+			user.password = await hashPassword(newPassword);
+			await user.save();
+			res.status(HTTP_STATUS.OK).json('Password successfully changed');
+		}
+	} catch (error) {
+		next(error);
+	}
 });
 
 // @description   Delete user
 // @route         DELETE /api/auth/:id
 // @access        Private
-const deleteUser = asyncHandler(async (req, res) => {
-	res.send('Delete user');
+const deleteUser = asyncHandler(async (req, res, next) => {
+	try {
+		const user = await User.findById(req.user._id).select('-password');
+
+		if (!user) {
+			res.status(HTTP_STATUS.BAD);
+			throw new BadRequestError('User not found');
+		}
+		await User.findByIdAndDelete(user.id);
+		res.status(HTTP_STATUS.OK).json(`User with id ${user.id} has been deleted`);
+	} catch (error) {
+		next(error);
+	}
 });
 
-export { getUsers, login, register, updateUser, deleteUser };
+export { getUsers, login, register, updateUser, updatePassword, deleteUser };

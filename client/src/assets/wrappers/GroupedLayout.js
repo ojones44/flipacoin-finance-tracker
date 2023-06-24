@@ -171,9 +171,13 @@ const Wrapper = styled.main`
     gap: 3rem;
   }
 
-  .modal-body .menu-btn:hover {
+  .modal-body .icon-btn:hover {
     transform: rotate(90deg);
     background-color: none;
+  }
+
+  .hamburger {
+    display: none;
   }
 
   @media (min-width: 900px) {
@@ -202,7 +206,7 @@ const Wrapper = styled.main`
       display: none;
     }
 
-    .menu-btn {
+    .hamburger {
       display: grid;
     }
 
