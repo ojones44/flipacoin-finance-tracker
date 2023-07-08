@@ -10,16 +10,30 @@ const AppContext = React.createContext();
 function AppProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const displayAlert = (message) => {
-    dispatch({ type: ACTIONS.DISPLAY_ALERT, message });
-  };
-
-  const displaySuccess = (message) => {
-    dispatch({ type: ACTIONS.DISPLAY_SUCCESS, message });
-  };
-
   const clearAlert = () => {
     dispatch({ type: ACTIONS.CLEAR_ALERT });
+  };
+
+  const clearAlertTimeout = (time) => {
+    setTimeout(() => {
+      dispatch({ type: ACTIONS.CLEAR_ALERT });
+    }, time);
+  };
+
+  const displayAlert = (message, time) => {
+    dispatch({ type: ACTIONS.DISPLAY_ALERT, message });
+
+    if (time) {
+      clearAlertTimeout(time);
+    }
+  };
+
+  const displaySuccess = (message, time) => {
+    dispatch({ type: ACTIONS.DISPLAY_SUCCESS, message });
+
+    if (time) {
+      clearAlertTimeout(time);
+    }
   };
 
   const passwordMatch = (result) => {
@@ -63,6 +77,7 @@ function AppProvider({ children }) {
         payload: { _id, name, email, token },
         authType,
       });
+      clearAlertTimeout(3000);
       addUserToLocalStorage(_id, name, email, token);
     } catch (error) {
       dispatch({
@@ -88,6 +103,7 @@ function AppProvider({ children }) {
         payload: { _id, name, email, token },
       });
       displaySuccess('Details updated successfully.');
+      clearAlertTimeout(3000);
       addUserToLocalStorage(_id, name, email, token);
     } catch (error) {
       dispatch({
@@ -108,6 +124,7 @@ function AppProvider({ children }) {
         config
       );
       displaySuccess('Password changed successfully.');
+      clearAlertTimeout(3000);
     } catch (error) {
       dispatch({
         type: ACTIONS.AUTH_ERROR,

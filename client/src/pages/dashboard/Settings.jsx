@@ -5,14 +5,22 @@ import { useEffect, useState } from 'react';
 import { useAppContext } from '../../context/appContext';
 
 // Component Imports
-import Alert from '../../components/Alert';
+import { Alert, InputForm, IconButton, AvatarCreator } from '../../components';
+import Wrapper from '../../assets/wrappers/Settings';
 
 function Settings() {
-  const { setActivePage, user, updateUser, updatePassword, showAlert } =
-    useAppContext();
+  const {
+    setActivePage,
+    user,
+    updateUser,
+    updatePassword,
+    showAlert,
+    displayAlert,
+    isLoading,
+  } = useAppContext();
 
-  const [name, setName] = useState(user?.name);
-  const [email, setEmail] = useState(user?.email);
+  const [name, setName] = useState(user?.name || 'Unknown User');
+  const [email, setEmail] = useState(user?.email || 'Unknown Email');
   const [isEditing, setIsEditing] = useState(false);
 
   const [oldPassword, setOldPassword] = useState('********');
@@ -40,6 +48,11 @@ function Settings() {
     resetUserFields();
   }
 
+  function changePassword() {
+    setChangingPassword(true);
+    setOldPassword('');
+  }
+
   function cancelPasswordChange() {
     setChangingPassword(false);
     resetPasswordFields();
@@ -56,6 +69,21 @@ function Settings() {
 
   function resetPassword(e) {
     e.preventDefault();
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      displayAlert('Please fill in all passwords fields', 3000);
+      return;
+    }
+
+    if (newPassword.length || confirmPassword.length < 8) {
+      displayAlert('Password must be more than 8 characters', 3000);
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      displayAlert('New passwords do not match', 3000);
+      return;
+    }
+
     const newPasswordInfo = { oldPassword, newPassword, confirmPassword };
     updatePassword(newPasswordInfo);
     setChangingPassword(false);
@@ -63,99 +91,136 @@ function Settings() {
   }
 
   return (
-    <main>
+    <Wrapper>
       <header>
-        <h2>Edit Profile</h2>
+        <h4>Edit Profile</h4>
       </header>
-      <div>{showAlert && <Alert />}</div>
-      <div>
-        <form action='submit' className=''>
-          <label htmlFor='name'>Username: </label>
-          <input
-            name='name'
-            type='text'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            disabled={!isEditing}
-          />
-          <label htmlFor='email'>Email: </label>
-          <input
-            name='email'
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={!isEditing}
-          />
-          {isEditing && (
-            <button type='submit' className='icon-btn' onClick={updateUserInfo}>
-              <FaSave />
-            </button>
-          )}
-        </form>
-        <button
-          type='button'
-          className='icon-btn'
-          onClick={() => setIsEditing(true)}
-        >
-          <FaPencilAlt />
-        </button>
-        <button type='button' className='icon-btn' onClick={cancelUserChange}>
-          <ImCross />
-        </button>
-      </div>
-      <div>
-        <form action='submit'>
-          <label htmlFor='password'>Password: </label>
-          <input
-            name='password'
-            type='password'
-            value={oldPassword}
-            onChange={(e) => setOldPassword(e.target.value)}
-            disabled={!changingPassword}
-          />
+      {showAlert && (
+        <div className='settings-alert'>
+          <Alert />
+        </div>
+      )}
+      <div className='settings-page-grid'>
+        <div className='section'>
+          <div>
+            <form action='submit' className='user-info'>
+              <div className='user-inputs'>
+                <InputForm
+                  type='text'
+                  name='name'
+                  value={name}
+                  labelText='Username'
+                  onChange={(e) => setName(e.target.value)}
+                  editing={isEditing}
+                />
 
-          {changingPassword && (
-            <>
-              <label htmlFor='password'>New Password: </label>
-              <input
-                name='password'
-                type='password'
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                <InputForm
+                  type='email'
+                  name='email'
+                  value={email}
+                  labelText='Email'
+                  onChange={(e) => setName(e.target.value)}
+                  editing={isEditing}
+                />
+              </div>
+
+              <div>
+                {isEditing && (
+                  <IconButton
+                    btnType='submit'
+                    classes='icon-btn-sm'
+                    onClick={updateUserInfo}
+                    icon={<FaSave />}
+                    isLoading={isLoading}
+                  />
+                )}
+                <IconButton
+                  btnType='button'
+                  classes='icon-btn-sm'
+                  onClick={() => setIsEditing(true)}
+                  icon={<FaPencilAlt />}
+                  isLoading={isLoading}
+                />
+
+                {isEditing && (
+                  <IconButton
+                    btnType='button'
+                    classes='icon-btn-sm'
+                    onClick={cancelUserChange}
+                    icon={<ImCross />}
+                    isLoading={isLoading}
+                  />
+                )}
+              </div>
+            </form>
+          </div>
+
+          <div className='user-password'>
+            <div className='old-password'>
+              <form action='submit'>
+                <InputForm
+                  type='password'
+                  name='password'
+                  value={oldPassword}
+                  labelText={changingPassword ? 'Old Password' : 'Password'}
+                  onChange={(e) => setOldPassword(e.target.value)}
+                  editing={changingPassword}
+                />
+              </form>
+
+              <IconButton
+                btnType='button'
+                classes='icon-btn-sm'
+                onClick={changePassword}
+                icon={<FaPencilAlt />}
+                isLoading={isLoading}
               />
-              <label htmlFor='password'>Confirm Password: </label>
-              <input
-                name='password'
-                type='password'
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-              <button
-                type='submit'
-                className='icon-btn'
-                onClick={resetPassword}
-              >
-                <FaSave />
-              </button>
-            </>
-          )}
-        </form>
-        <button
-          type='button'
-          className='icon-btn'
-          onClick={() => setChangingPassword(true)}
-        >
-          <FaPencilAlt />
-        </button>
-        <button
-          type='button'
-          className='icon-btn'
-          onClick={cancelPasswordChange}
-        >
-          <ImCross />
-        </button>
+            </div>
+
+            <div className='change-password'>
+              {changingPassword && (
+                <>
+                  <InputForm
+                    type='password'
+                    name='password'
+                    value={newPassword}
+                    labelText='New Password'
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    editing={changingPassword}
+                  />
+
+                  <InputForm
+                    type='password'
+                    name='password'
+                    value={confirmPassword}
+                    labelText='Confirm Password'
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    editing={changingPassword}
+                  />
+
+                  <IconButton
+                    btnType='button'
+                    classes='icon-btn-sm'
+                    onClick={resetPassword}
+                    icon={<FaSave />}
+                    isLoading={isLoading}
+                  />
+
+                  <IconButton
+                    btnType='button'
+                    classes='icon-btn-sm'
+                    onClick={cancelPasswordChange}
+                    icon={<ImCross />}
+                    isLoading={isLoading}
+                  />
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+        <AvatarCreator />
       </div>
-    </main>
+    </Wrapper>
   );
 }
 export default Settings;

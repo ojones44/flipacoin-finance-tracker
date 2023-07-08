@@ -36,7 +36,9 @@ function Login() {
   }, [user, token, navigate]);
 
   useEffect(() => {
-    clearAlert();
+    if (showAlert) {
+      clearAlert();
+    }
     if (email && password) {
       setIsComplete(true);
     } else {

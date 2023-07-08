@@ -17,6 +17,7 @@ const Wrapper = styled.main`
     padding: var(--padding-100);
     box-shadow: var(--shadow-3);
     transition: var(--transition);
+    overflow: auto;
   }
 
   .profile {

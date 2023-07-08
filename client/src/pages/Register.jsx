@@ -39,7 +39,9 @@ function Register() {
   }, [user, token, navigate]);
 
   useEffect(() => {
-    clearAlert();
+    if (showAlert) {
+      clearAlert();
+    }
     if (
       name &&
       email &&
