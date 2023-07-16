@@ -67,6 +67,10 @@ const Wrapper = styled.main`
     grid-column: 1 / 3;
   }
 
+  .avatar-options label {
+    min-width: 130px;
+  }
+
   h4 {
     padding-inline: 1rem;
   }

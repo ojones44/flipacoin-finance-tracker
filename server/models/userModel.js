@@ -11,6 +11,7 @@ import {
 	requiredNameString,
 	requiredEmailString,
 	requiredPasswordString,
+	avatarModel,
 } from './dataTypes.js';
 
 // User model
@@ -18,6 +19,7 @@ const userModel = {
 	name: requiredNameString,
 	email: requiredEmailString,
 	password: requiredPasswordString,
+	avatar: avatarModel,
 };
 
 // Create new schema

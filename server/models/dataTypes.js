@@ -33,9 +33,24 @@ const requiredPasswordString = {
 	select: false,
 };
 
+const avatarModel = {
+	top: String,
+	accessories: String,
+	hairColor: String,
+	facialHair: String,
+	facialHairColor: String,
+	clothes: String,
+	fabricColor: String,
+	eyes: String,
+	eyebrows: String,
+	mouth: String,
+	skin: String,
+};
+
 export {
 	requiredString,
 	requiredNameString,
 	requiredEmailString,
 	requiredPasswordString,
+	avatarModel,
 };

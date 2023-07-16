@@ -6,6 +6,7 @@ const initialState = {
   alertText: '',
   alertType: '',
   user: JSON.parse(localStorage.getItem('user')) || null,
+  avatar: JSON.parse(localStorage.getItem('avatar')) || null,
   token: localStorage.getItem('token') || null,
   activePage: 'dashboard',
   modalMenuOpen: false,
@@ -61,6 +62,7 @@ const reducer = (state, action) => {
           name: action.payload.name,
           email: action.payload.email,
         },
+        avatar: action.payload.avatar,
         token: action.payload.token,
         isLoading: false,
         showAlert: true,
@@ -108,6 +110,12 @@ const reducer = (state, action) => {
           email: action.payload.email,
         },
         token: action.payload.token,
+      };
+
+    case ACTIONS.UPDATE_USER_AVATAR:
+      return {
+        ...state,
+        avatar: action.payload.avatar,
       };
 
     case ACTIONS.RESET:

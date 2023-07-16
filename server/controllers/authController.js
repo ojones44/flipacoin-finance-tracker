@@ -8,6 +8,9 @@ import jwt from 'jsonwebtoken';
 // Database
 import User from '../models/userModel.js';
 
+// Data
+import avatarOptions from '../../client/src/utils/avatarOptions.js';
+
 // Error handlers
 import {
 	BadRequestError,
@@ -31,6 +34,29 @@ const hashPassword = async (password) => {
 const comparePassword = async (enteredPassword, dbPassword) => {
 	const isMatched = await bycrypt.compare(enteredPassword, dbPassword);
 	return isMatched;
+};
+
+const generateRandomAvatar = () => {
+	const randomAvatarItems = [];
+	avatarOptions.forEach((item) =>
+		randomAvatarItems.push(
+			item.options[Math.floor(Math.random() * item.options.length)]
+		)
+	);
+
+	return {
+		top: randomAvatarItems[0],
+		accessories: randomAvatarItems[1],
+		hairColor: randomAvatarItems[2],
+		facialHair: randomAvatarItems[3],
+		facialHairColor: randomAvatarItems[4],
+		clothes: randomAvatarItems[5],
+		fabricColor: randomAvatarItems[6],
+		eyes: randomAvatarItems[7],
+		eyebrows: randomAvatarItems[8],
+		mouth: randomAvatarItems[9],
+		skin: randomAvatarItems[10],
+	};
 };
 
 // Managing login and registration
@@ -68,6 +94,7 @@ const login = asyncHandler(async (req, res, next) => {
 				name: user.name,
 				email: user.email,
 				token: generateToken(user.id),
+				avatar: user.avatar || null,
 			});
 		} else {
 			throw new UnauthenticatedError('Invalid login credentials.');
@@ -104,6 +131,7 @@ const register = asyncHandler(async (req, res, next) => {
 			name: _.capitalize(name),
 			email: _.toLower(email),
 			password: password && (await hashPassword(password)),
+			avatar: generateRandomAvatar(),
 		});
 
 		res.status(HTTP_STATUS.OK).json({
@@ -111,6 +139,7 @@ const register = asyncHandler(async (req, res, next) => {
 			name: newUser.name,
 			email: newUser.email,
 			token: generateToken(newUser.id),
+			avatar: newUser.avatar,
 		});
 	} catch (error) {
 		next(error);
@@ -144,6 +173,30 @@ const updateUser = asyncHandler(async (req, res, next) => {
 			name: user.name,
 			email: user.email,
 			token: generateToken(user.id),
+		});
+	} catch (error) {
+		next(error);
+	}
+});
+
+// @description   Update user avatar
+// @route         PUT /api/auth/avatar/:id
+// @access        Private
+const updateAvatar = asyncHandler(async (req, res, next) => {
+	try {
+		const { newAvatar } = req.body;
+		const user = await User.findById(req.user._id).select('-password');
+
+		if (!user) {
+			res.status(HTTP_STATUS.BAD);
+			throw new BadRequestError('User not found');
+		}
+
+		user.avatar = newAvatar;
+		await user.save();
+
+		res.status(HTTP_STATUS.OK).json({
+			avatar: user.avatar,
 		});
 	} catch (error) {
 		next(error);
@@ -222,4 +275,12 @@ const deleteUser = asyncHandler(async (req, res, next) => {
 	}
 });
 
-export { getUsers, login, register, updateUser, updatePassword, deleteUser };
+export {
+	getUsers,
+	login,
+	register,
+	updateUser,
+	updateAvatar,
+	updatePassword,
+	deleteUser,
+};

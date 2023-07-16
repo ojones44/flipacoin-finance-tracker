@@ -40,13 +40,18 @@ function AppProvider({ children }) {
     dispatch({ type: ACTIONS.PW_MATCH, result });
   };
 
-  const addUserToLocalStorage = (_id, name, email, token) => {
+  const addUserToLocalStorage = (_id, name, email, token, avatar) => {
     localStorage.setItem('user', JSON.stringify({ _id, name, email }));
     localStorage.setItem('token', token);
+
+    if (avatar) {
+      localStorage.setItem('avatar', JSON.stringify(avatar));
+    }
   };
 
   const removeUserFromLocalStorage = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('avatar');
     localStorage.removeItem('token');
   };
 
@@ -71,14 +76,14 @@ function AppProvider({ children }) {
     dispatch({ type: ACTIONS.AUTH_BEGIN });
     try {
       const response = await axios.post(`/api/auth/${endpoint}`, currentUser);
-      const { _id, name, email, token } = response.data;
+      const { _id, name, email, token, avatar } = response.data;
       dispatch({
         type: ACTIONS.AUTH_SUCCESS,
-        payload: { _id, name, email, token },
+        payload: { _id, name, email, token, avatar },
         authType,
       });
       clearAlertTimeout(3000);
-      addUserToLocalStorage(_id, name, email, token);
+      addUserToLocalStorage(_id, name, email, token, avatar);
     } catch (error) {
       dispatch({
         type: ACTIONS.AUTH_ERROR,
@@ -105,6 +110,32 @@ function AppProvider({ children }) {
       displaySuccess('Details updated successfully.');
       clearAlertTimeout(3000);
       addUserToLocalStorage(_id, name, email, token);
+    } catch (error) {
+      dispatch({
+        type: ACTIONS.AUTH_ERROR,
+        payload: { message: error.response.data.message },
+      });
+    }
+  };
+
+  const updateAvatar = async (newAvatar) => {
+    try {
+      const config = {
+        headers: { Authorization: `Bearer ${state.token}` },
+      };
+      const response = await axios.put(
+        `api/auth/avatar/${state.user._id}`,
+        newAvatar,
+        config
+      );
+      const { avatar } = response.data;
+      dispatch({
+        type: ACTIONS.UPDATE_USER_AVATAR,
+        payload: { avatar },
+      });
+      displaySuccess('Avatar updated successfully.');
+      clearAlertTimeout(3000);
+      localStorage.setItem('avatar', JSON.stringify(avatar));
     } catch (error) {
       dispatch({
         type: ACTIONS.AUTH_ERROR,
@@ -147,6 +178,7 @@ function AppProvider({ children }) {
         setModalOpen,
         logoutUser,
         updateUser,
+        updateAvatar,
         updatePassword,
       }}
     >

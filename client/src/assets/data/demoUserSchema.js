@@ -6,3 +6,19 @@ const demoUser = {
 };
 
 export default demoUser;
+
+{
+  /* <Avatar
+            top={randomAvatar.top}
+            accessory={randomAvatar.accessory}
+            hairColor={randomAvatar.hairColor}
+            facialHair={randomAvatar.facialHair}
+            facialHairColor={randomAvatar.facialHairColor}
+            clothes={randomAvatar.clothes}
+            fabricColor={randomAvatar.fabricColor}
+            eyes={randomAvatar.eyes}
+            eyebrows={randomAvatar.eyebrows}
+            mouth={randomAvatar.mouth}
+            skin={randomAvatar.skin}
+          /> */
+}

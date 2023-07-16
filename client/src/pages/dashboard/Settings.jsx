@@ -73,12 +73,10 @@ function Settings() {
       displayAlert('Please fill in all passwords fields', 3000);
       return;
     }
-
-    if (newPassword.length || confirmPassword.length < 8) {
+    if (newPassword.length < 8 || confirmPassword.length < 8) {
       displayAlert('Password must be more than 8 characters', 3000);
       return;
     }
-
     if (newPassword !== confirmPassword) {
       displayAlert('New passwords do not match', 3000);
       return;
@@ -119,7 +117,7 @@ function Settings() {
                   name='email'
                   value={email}
                   labelText='Email'
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   editing={isEditing}
                 />
               </div>
